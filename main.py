@@ -1,5 +1,5 @@
 import readKeyFile
 
-key = readKeyFile.getKey("testKey.txt")
-
+key = readKeyFile.getKey("testKey")
 print (key)
+
