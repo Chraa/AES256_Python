@@ -8,3 +8,5 @@ def getKey(filename, i=2):
         encode = int(chars)
         i += 2
     return encode
+
+HEJEHEJEHHEJESWDAJLA
