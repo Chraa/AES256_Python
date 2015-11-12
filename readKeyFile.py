@@ -1,4 +1,8 @@
-### READS KEY FILE ###
+# # # # # # # # # # # #
+# DT2016
+# PATRIC WALLIN
+# DU.SE
+# PYTHON ENCRYPTOR/DECRYPTOR AES 256
 
 
 def getKey(filename):
