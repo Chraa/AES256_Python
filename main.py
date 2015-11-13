@@ -25,3 +25,9 @@ print ("\nRowShifter:")
 
 shift = rowShifter.shiftRow(block)
 print (shift)
+
+#blank rows
+print ("\nRowShifterInverter:")
+
+shiftinv = rowShifter.shiftRowInv(block)
+print (shiftinv)
