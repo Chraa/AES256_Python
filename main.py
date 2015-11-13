@@ -6,6 +6,7 @@
 
 import readKeyFile
 import readBlockFile
+import rowShifter
 
 print ("Key File:")
 #reads key from file
@@ -19,3 +20,8 @@ print ("\nBlock File:")
 block = readBlockFile.getBlock("testBlock")
 print (block)
 
+#blank rows
+print ("\nRowShifter:")
+
+shift = rowShifter.shiftRow(block)
+print (shift)
