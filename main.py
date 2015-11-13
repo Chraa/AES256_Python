@@ -7,6 +7,8 @@
 import readKeyFile
 import readBlockFile
 import rowShifter
+import columnMixer
+from mixColTables import *
 
 print ("Key File:")
 #reads key from file
@@ -31,3 +33,15 @@ print ("\nRowShifterInverter:")
 
 shiftinv = rowShifter.shiftRowInv(block)
 print (shiftinv)
+
+#blank rows
+print ("\nColumn Mixer:")
+
+colmixer = columnMixer.mixColumns(shiftinv)
+print (colmixer)
+
+#blank rows
+print ("\nColumn Mixer Inverse:")
+
+colmixerInv = columnMixer.mixColumnsInv(colmixer)
+print (colmixerInv)
