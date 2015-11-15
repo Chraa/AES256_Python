@@ -48,5 +48,3 @@ print (sub)
 print ("SubBytesInv:")
 subInv = subBytesInv(sub)
 print (subInv)
-
-
