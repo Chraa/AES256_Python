@@ -8,40 +8,45 @@ import readKeyFile
 import readBlockFile
 import rowShifter
 import columnMixer
-from mixColTables import *
+#from mixColTables import *
+from sBox import *
+from subBytes import *
 
 print ("Key File:")
-#reads key from file
 key = readKeyFile.getKey("testKey")
 print (key)
 
-#blank rows
 print ("\nBlock File:")
-
-#reads block from file
 block = readBlockFile.getBlock("testBlock")
 print (block)
 
-#blank rows
 print ("\nRowShifter:")
-
 shift = rowShifter.shiftRow(block)
 print (shift)
 
-#blank rows
 print ("\nRowShifterInverter:")
-
 shiftinv = rowShifter.shiftRowInv(block)
 print (shiftinv)
 
-#blank rows
 print ("\nColumn Mixer:")
-
 colmixer = columnMixer.mixColumns(shiftinv)
 print (colmixer)
 
-#blank rows
 print ("\nColumn Mixer Inverse:")
-
 colmixerInv = columnMixer.mixColumnsInv(colmixer)
 print (colmixerInv)
+
+print ("\nSboxes:")
+print (sbox[0]),
+print (sboxInv[0]),
+print (rCon[0])
+
+print ("SubBytes:")
+sub = subBytes(block)
+print (sub)
+
+print ("SubBytesInv:")
+subInv = subBytesInv(sub)
+print (subInv)
+
+
