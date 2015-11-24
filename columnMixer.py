@@ -22,7 +22,7 @@ def mixColumns(col):
     for i in range(0,len(col),4):
         outCol.append(mixColumn(col[i:i+4]))
 
-    return outCol
+    return listoflist2list(outCol)
 
 def mixColumnInv(column):
     col = copy(column)
@@ -40,3 +40,10 @@ def mixColumnsInv(col):
         intList.append(mixColumnInv(col[i]))
 
     return intList
+
+def listoflist2list(column):
+    columnList = []
+    for row in column:
+        for i in range(0,len(row)):
+            columnList.append(row[i])
+    return columnList
