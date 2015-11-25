@@ -16,7 +16,8 @@ def shiftRow(blockfile):
     return blockDone
 
 def shiftRowInv(blockfile):
+    block = blockfileColumn(blockfile)
     for i in range(4):
-        blockfile[i*4:i*4+4] = rotate(blockfile[i*4:i*4+4], -i)
-
-    return blockfile
+        block[i*4:i*4+4] = rotate(block[i*4:i*4+4], -i)
+    block = blockfileColumn(block)
+    return block

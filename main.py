@@ -16,12 +16,21 @@ from rowToCol import *
 import addRoundKey
 import keyManager
 
-#START OF AES256 ENCRYPTION
+#GET BLOCK AND KEY
 block = readBlockFile.getBlock("testBlock")
 key = readKeyFile.getKey("testKey")
+print "\nRAW-BLOCK:",
 print(block)
+
+#START OF AES256 ENCRYPTION
 encryptedBlock = encrypt(block,key)
+print "\nENCRYPTED:",
 print encryptedBlock
+
+#DECRYPTION
+decryptedBlock = decrypt(encryptedBlock,key)
+print "\nDECRYPTED:",
+print decryptedBlock
 
 '''
 print("Key Sched 1st step:\n")

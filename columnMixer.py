@@ -36,10 +36,10 @@ def mixColumnInv(column):
 
 def mixColumnsInv(col):
     intList = []
-    for i in range(0,4):
-        intList.append(mixColumnInv(col[i]))
+    for i in range(0,len(col),4):
+        intList.append(mixColumnInv(col[i:i+4]))
 
-    return intList
+    return listoflist2singlelist(intList)
 
 def listoflist2singlelist(column):
     columnList = []
