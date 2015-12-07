@@ -3,18 +3,22 @@
 # PATRIC WALLIN
 # DU.SE
 # PYTHON ENCRYPTOR/DECRYPTOR AES 256
-from readKeyFile import *
+
 from keyManager import *
 from addRoundKey import *
 from rowShifter import *
 from columnMixer import *
 
 def encrypt(block,key):
-
+    '''
+    :param block:blocket kommer fran main, dar vi itererar igenom filen som ska krypteras. 16byte langt varde
+    :param key: Nyckeln som kommer fran Main(alltsa "huvudnyckeln")
+    :return:returnerar krypterade block 16byte i taget.
+    '''
     #INITIALIZE
-    expandedKey = expandKey(key)
+    expandedKey = expandKey(key)#Gor om nyckel till 256bit nyckel.
     #0 ROUND
-    roundKey = createRoundKey(expandedKey,0)
+    roundKey = createRoundKey(expandedKey,0)#roundKey = 16bit nyckeldel
     block = addroundkey(block,roundKey)
     #ROUND 1 - 13
     for i in range(1,14):
@@ -33,6 +37,11 @@ def encrypt(block,key):
     return block
 
 def decrypt(block,key):
+    '''
+    :param block:
+    :param key:
+    :return:
+    '''
     #initialize decrypt
     expandedKey = expandKey(key)
     roundKey = createRoundKey(expandedKey,14)

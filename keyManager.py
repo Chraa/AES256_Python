@@ -4,16 +4,28 @@
 # DU.SE
 # PYTHON ENCRYPTOR/DECRYPTOR AES 256
 
-from sBox import *
 from subBytes import *
 
 def keyScheduleCore(word, i):
-    newWord = word[1:]+word[:1]
-    subBytes(newWord)
-    newWord[0] = newWord[0] ^ rCon[i]
+    '''
+    :param word:T fran expandKey som ar de 4 sista bytes per 32byte iteration som skapar nastkommande rotering av nyckelvarden
+    :param i:iterationen fran expandKey. ar 1-8 (keyScheduleCore anvands 8ggr per nyckel)
+    :return:returnerar vardet av newWord dar forsta vardet blir Xor med rCon[i] dar [i] kommer fran expandKey rConIter
+    '''
+    newWord = word[1:]+word[:1]#Skiftar vardet ett steg vanster
+    subBytes(newWord)#Skickar newWord till subBytes som far nya varden.
+    newWord[0] = newWord[0] ^ rCon[i]#forsta vardet i newWord blir Xor med rCon[i]
     return newWord
 
 def expandKey(cipherKey):
+    '''
+    :param cipherKey:
+    Denna klarade inte jag av att skriva sjalv och all credit ar:
+    http://brandon.sternefamily.net/wp-content/uploads/2007/06/pyAES.txt
+    :return:returnerar en expanderad nyckel pa 256 bit(dar borjan ar originalnyckel)
+    Anvander sista 4 bit av nyckeln for att skapa resterande varden sa att nyckeln blir 256 bit.
+    detta sker i rundor av 32bit
+    '''
     cipherKeySize = len(cipherKey)
     assert cipherKeySize == 32
     expandedKey = []
@@ -52,4 +64,9 @@ def expandKey(cipherKey):
     return expandedKey
 
 def createRoundKey(expandedKey,i):
+    '''
+    :param expandedKey: far in expanded key tar ut i*16bits och i*16+16bits
+    :param i: iterationen fran vilken runda AESCryptot ar pa, Borjar pa 0.
+    :return:returnerar ett 16 bit langt varde, beroende pa iteration.
+    '''
     return expandedKey[i*16:i*16+16]

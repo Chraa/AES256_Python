@@ -5,96 +5,97 @@
 # PYTHON ENCRYPTOR/DECRYPTOR AES 256
 
 import readKeyFile
-import readBlockFile
+from readBlockFile import *
 from AES256 import *
-import rowShifter
-import columnMixer
-#from mixColTables import *
-from sBox import *
-from subBytes import *
-from rowToCol import *
-import addRoundKey
-import keyManager
+import argparse
+from argparse import RawTextHelpFormatter
+import time
 
-#GET BLOCK AND KEY
-block = readBlockFile.getBlock("testBlock")
-key = readKeyFile.getKey("testKey")
-print "\nRAW-BLOCK:",
-print(block)
+parser = argparse.ArgumentParser(description='''
+    ---------------------------------------
+    HOGSKOLAN DALARNA (www.du.se)
+    Course:     DT2017 Kryptologi
+    Project:    AES256
+    Written by: Patric Wallin
+    Hela detta program har diskuterats
+    igenom och skapats med hjalp av mina
+    klasskamrater Martin Lindstrand &
+    Christoffer Claesson.
+    ---------------------------------------
 
-#START OF AES256 ENCRYPTION
-encryptedBlock = encrypt(block,key)
-print "\nENCRYPTED:",
-print encryptedBlock
+''', formatter_class=RawTextHelpFormatter)
+parser.add_argument('mode',help="encrypt or decrypt")
+args = parser.parse_args()
 
-#DECRYPTION
-decryptedBlock = decrypt(encryptedBlock,key)
-print "\nDECRYPTED:",
-print decryptedBlock
-
-'''
-print("Key Sched 1st step:\n")
-word = [1,2,3,4]
-newWord = keyManager.keyScheduleCore(word,1)
-print(word)
-print(newWord)
-block = readBlockFile.getBlock("testBlock")
-key = readKeyFile.getKey("testKey")
-print(key)
-expandedKey = keyManager.expandKey(key)
-print(expandedKey)
-roundKey0 = keyManager.createRoundKey(expandedKey,0)
-roundKey7 = keyManager.createRoundKey(expandedKey,7)
-roundKey14 = keyManager.createRoundKey(expandedKey,14)
-
-print(roundKey0)
-print(roundKey7)
-print(roundKey14)
-
-addedRoundKey = addRoundKey.addroundkey(roundKey0,block)
-print(addedRoundKey)
+mode = str(args.mode).lower()
 
 
-print ("Key File:")
-key = readKeyFile.getKey("testKey")
-print (key)
+def fileEncrypt():
+    '''
+    :KRYPTERINGSINITIERINGEN
+    :Startar tid och skickar ivag getEncryptedBlock() till sin metod i readBlockFile.py
+    :skriver ut langden pa Blocket
+    :Key lases in genom readKeyFile.getKey() i readKeyFile.py
+    :outfile = filen som returneras ut fran programmet
+    :sedan kors en iterering av langden i blocket dar jag skickar med block for block som blir krypterat
+    :efter det sa itereras lister av listor igenom sa att jag far ut en enda ren textstrang
+    :har kommer hex() och zfill till anvandning hex(item) vardet so mska till strangen, 2: och frammot fylls med 0
+    :zfill(2) fyller ut med nollor om det inte ar fullt av varden i de 2 slotsen.
+    :return:BLANK.. stanger filer och skriver ut resultat.
+    '''
+    start = time.clock()
+    block = getEncryptBlock("tWotW.7z")
+    print len(block)
+    startkrypt = time.clock()
+    key = readKeyFile.getKey("testKey")
+    outfile = open("encrypted_file_7z","wb")
+    strangen = ""
+    cryptLargeblock = []
+    for i in range(len(block)):
+        cryptLargeblock.append(encrypt(block[i],key))
 
-print ("\nBlock File:")
-block = readBlockFile.getBlock("testBlock")
-print (block)
+    while i < len(cryptLargeblock):
+        for row in cryptLargeblock:
+            for item in row:
+                strangen += hex(item)[2:].zfill(2)
+        i += 1
+    outfile.write(strangen)
+    outfile.close()
+    kryptelapsed = time.clock()-startkrypt
+    elapsed = time.clock()-start
+    print len(cryptLargeblock)
+    print "Total Tid: " + str(elapsed)
+    print "Krypteringstid: " + str(kryptelapsed)
 
-print("\nrowToCol:")
-test = blockfileColumn(block)
-print (test)
-print (blockfileColumn(test))#INVERTERING SAME SAME BUT DIFFERENT
+def fileDecrypt():
+    start = time.clock()
+    key = readKeyFile.getKey("testKey")
+    file = open("decrypted_file.7z","wb")
+    decrypttime = time.clock()
+    decryptBlock = []
+    decString = ""
+    eblock = getDecryptBlock("encrypted_file_7z")
+    print len(eblock)
 
-print ("\nRowShifter:")
-shift = rowShifter.shiftRow(block)
-print (shift)
-print (blockfileColumn(shift))
+    for i in range(len(eblock)):
+        decryptBlock.append(decrypt(eblock[i],key))
 
-print ("\nRowShifterInverter:")
-shiftinv = rowShifter.shiftRowInv(block)
-print (shiftinv)
+    for row in decryptBlock:
+        for item in row:
+            decString += chr(item)
 
-print ("\nColumn Mixer:")
-colmixer = columnMixer.mixColumns(block)
-print (colmixer)
+    file.write(decString)
+    file.close()
+    decryptelapsed = time.clock()-decrypttime
+    elapsed = time.clock()-start
+    print "Total Tid: " + str(elapsed)
+    print "Dekrypteringstid: " + str(decryptelapsed)
 
-print ("\nColumn Mixer Inverse:")
-colmixerInv = columnMixer.mixColumnsInv(colmixer)
-print (colmixerInv)
+if mode == "encrypt" or mode == "e":
+    fileEncrypt()
+elif mode == "decrypt" or mode == "d":
+    fileDecrypt()
 
-print ("\nSboxes:")
-print (sbox[0]),
-print (sboxInv[0]),
-print (rCon[0])
 
-print ("SubBytes:")
-sub = subBytes(block)
-print (sub)
 
-print ("SubBytesInv:")
-subInv = subBytesInv(sub)
-print (subInv)
-'''
+

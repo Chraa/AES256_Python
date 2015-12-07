@@ -5,11 +5,41 @@
 # PYTHON ENCRYPTOR/DECRYPTOR AES 256
 
 
-def getBlock(filename):
-    blockfile = open(filename, 'r')                                                                                     #blockfile opens file specified in main.py
-    hexadecimalblock = blockfile.read()                                                                                 #blockfilefile is read into hexadecimalkey
-    blockarray = []                                                                                                       #array to keep values nice and tidy
-    for i in range(0, len(hexadecimalblock), 2):                                                                        #for loop to find all hex values and put them in the array
-        blockarray.append(int(hexadecimalblock[i:i+2], 16))
+def getDecryptBlock(block):
+    '''
+    :param block:
+    :return:
+    '''
+    file = open(block, 'r')
+    byte = file.read()
+    blockarray = []
+    block = []
+    for i in range(0,len(byte),2):
+        blockarray.append(int(byte[i:i+2],16))
+
+    for i in range(0,len(blockarray),16):
+        block.append(blockarray[i:i+16])
+    return block
+
+def getEncryptBlock(block):
+    '''
+    :param block:
+    :return:
+    '''
+    file = open(block,'rb')
+    byte = file.read().encode("hex")
+    blockarray = []
+    arr = []
+    for i in range(0,len(byte),2):
+        arr.append(int(byte[i:i+2], 16))
+
+    while len(arr) >= 16:
+        blockarray.append(arr[0:16])
+        arr = arr[16:]
+        if len(arr) < 16:
+            temparray = [0]*16
+            for k in range(0,len(arr)):
+                temparray[k] = arr[k]
+            blockarray.append(temparray)
     return blockarray
 

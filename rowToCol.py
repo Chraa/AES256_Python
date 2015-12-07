@@ -5,6 +5,10 @@
 # PYTHON ENCRYPTOR/DECRYPTOR AES 256
 
 def blockfileColumn(filename):
+    '''
+    :param filename:Denna filen finns enbart for att ratta till ett problem med shiftrows (den gor raderna till kolumner)...
+    :return:returnerar kolumnerna istallet. till shiftRows
+    '''
     test2 = filename
     testarr = []
     for row in range(0,4):
