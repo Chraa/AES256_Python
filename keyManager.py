@@ -23,7 +23,7 @@ def expandKey(cipherKey):
     Denna klarade inte jag av att skriva sjalv och all credit ar:
     http://brandon.sternefamily.net/wp-content/uploads/2007/06/pyAES.txt
     :return:returnerar en expanderad nyckel pa 256 bit(dar borjan ar originalnyckel)
-    Anvander sista 4 bit av nyckeln for att skapa resterande varden sa att nyckeln blir 256 bit.
+    Anvander sista 4 byte av nyckeln for att skapa resterande varden sa att nyckeln blir 256 bit.
     detta sker i rundor av 32bit
     '''
     cipherKeySize = len(cipherKey)
@@ -65,7 +65,7 @@ def expandKey(cipherKey):
 
 def createRoundKey(expandedKey,i):
     '''
-    :param expandedKey: far in expanded key tar ut i*16bits och i*16+16bits
+    :param expandedKey: far in expanded key tar ut i*16bits till och med i*16+16bits
     :param i: iterationen fran vilken runda AESCryptot ar pa, Borjar pa 0.
     :return:returnerar ett 16 bit langt varde, beroende pa iteration.
     '''

@@ -7,8 +7,9 @@
 
 def getDecryptBlock(block):
     '''
-    :param block:
-    :return:
+    :param block:oppnar filen som skickas fran main i read lage, laser in 2 byte at gangen(hexvarden)
+    : gor om det till intvarden stegar upp 2 bytes. Skapar lista med listor 16 byte stora.
+    :return:returnerar lista med listor 16 bytes block.
     '''
     file = open(block, 'r')
     byte = file.read()
@@ -23,8 +24,10 @@ def getDecryptBlock(block):
 
 def getEncryptBlock(block):
     '''
-    :param block:
-    :return:
+    :param block: oppnar filen binart (rb) och gor om den till hexvarden laser in 2 byte varden i arr[]
+    : ar aven med en padding metod som kollar om langden pa arr[] ar mer eller mindre an 16 bytes.
+    : detta ar en losning for att padda ut blocket till 16 bytes om det ar for kort.
+    :return: returnerar blocket i 16 bytes langd.
     '''
     file = open(block,'rb')
     byte = file.read().encode("hex")

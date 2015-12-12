@@ -6,9 +6,9 @@
 
 def addroundkey(block,roundKey):
     '''
-    :param block:
+    :param block: 16byte block som XOR:as med roundKey i langden av block.
     :param roundKey:16bitars nyckel som kommer fran keyManager:createRoundKey
-    :return:
+    :return: returnerar ett xorat block
     '''
     for i in range(len(block)):
         block[i] = block[i] ^ roundKey[i]

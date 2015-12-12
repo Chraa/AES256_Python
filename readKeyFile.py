@@ -6,6 +6,10 @@
 
 
 def getKey(filename):
+    '''
+    :param filename: filename pa nyckeln, lases in i read lage gors om till intvarden och appendas i en ny array.
+    :return: returnerar nyckel array
+    '''
     keyfile = open(filename, 'r')                                                                                       #keyfile opens file specified in main.py
     hexadecimalkey = keyfile.read()                                                                                     #keyfile is read into hexadecimalkey
     keyarray = []                                                                                                       #array to keep values nice and tidy
